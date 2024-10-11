@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiFi QR Generator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background-color: #ffffff;
+            border: 2px solid #007BFF;
+            padding: 20px;
+            border-radius: 20px; /* جعل الزوايا مستديرة */
+            width: 320px; /* تقليل العرض */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* زيادة الظل */
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px; /* حجم أصغر للعناوين */
+            color: #333;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px; /* تقليل حجم الحقول */
+            margin: 10px 0;
+            border: 1px solid #007BFF;
+            border-radius: 20px; /* زوايا دائرية أكثر */
+            font-size: 14px; /* حجم أصغر للنص داخل الحقول */
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); /* إضافة ظل */
+            transition: box-shadow 0.3s ease;
+        }
+        input:focus {
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4); /* تأثير عند التفاعل */
+            outline: none; /* إزالة الخط الخارجي */
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px; /* تقليل حجم الأزرار */
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 16px; /* تقليل حجم الخط */
+            border-radius: 20px; /* زوايا دائرية أكثر */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); /* إضافة ظل */
+        }
+        button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 6px 15px rgba(0, 86, 179, 0.4); /* تأثير عند التفاعل */
+        }
+        #qrcode {
+            margin-top: 20px;
+        }
+        .note {
+            font-size: 12px; /* حجم أصغر للملاحظة */
+            color: #555;
+            margin-top: 10px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 16px; /* حجم الخط للحقوق */
+            color: #888;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>WiFi Login</h2>
+        <div id="qrcode"></div>
+        <input type="text" id="ssid" placeholder="Network name (SSID)">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="generateQRCode()">Print Wifi Card</button>
+        <p class="note">وجه كاميرا هاتفك نحو رمز الاستجابة السريعة (QR) للاتصال بشبكة الواي فاي</p> <!-- الترجمة -->
+    </div>
+
+    <div class="footer">
+        &copy; 2024 مهدي رائد
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        function generateQRCode() {
+            const ssid = document.getElementById('ssid').value;
+            const password = document.getElementById('password').value;
+            const encryption = "WPA"; // افتراض نوع التشفير كـ WPA
+
+            // صيغة QR كود لاتصال الواي فاي
+            const qrData = `WIFI:T:${encryption};S:${ssid};P:${password};;`;
+
+            // Clear the previous QR code if it exists
+            document.getElementById("qrcode").innerHTML = "";
+
+            const qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: qrData,
+                width: 200,
+                height: 200,
+            });
+        }
+    </script>
+
+</body>
+</html>
